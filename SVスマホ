@@ -322,6 +322,31 @@
       justify-content: center;
     }
 
+
+
+    #mainA {
+      display: block;
+      width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      .wrap {
+        padding: 12px 10px 24px;
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .item-head {
+        flex-direction: column;
+      }
+
+      .item-head input[type="checkbox"] {
+        margin-top: 0;
+      }
+    }
+
     @media (min-width: 640px) {
       .grid.cols-2 {
         grid-template-columns: 1fr 1fr;
@@ -333,7 +358,7 @@
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <main id="mainA" class="wrap">
     <section class="hero">
       <h1>新店オープン初日・2日目 SVチェックリスト</h1>
       <p>おにぎり中心の物販店舗向け。現場での事故防止、品質維持、オペレーション安定、欠品・ロス管理、2日目以降の再現性確保を目的としたスマホ入力用フォームです。</p>
@@ -394,7 +419,7 @@
         このHTMLは1ファイル完結です。保存先はブラウザ内のIndexedDBであり、クラウド保存ではありません。端末やブラウザを変えると、保存内容は引き継がれません。
       </div>
     </section>
-  </div>
+  </main>
 
   <div class="modal" id="imageModal">
     <div class="modal-inner">
