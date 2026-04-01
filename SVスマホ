@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>新店オープン初日・2日目 SVチェックリスト</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --card: #ffffff;
+      --line: #d9dde3;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #0f766e;
+      --accent-soft: #e6fffb;
+      --danger: #b91c1c;
+      --danger-soft: #fef2f2;
+      --shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans JP", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 16px 14px 32px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0f766e, #115e59);
+      color: #fff;
+      border-radius: 20px;
+      padding: 18px 16px;
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 1.35rem;
+      line-height: 1.45;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 0.95rem;
+      opacity: 0.95;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0 0 12px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .field label,
+    .memo-label,
+    .photo-label {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 14px;
+      font-size: 16px;
+      background: #fff;
+      color: var(--text);
+      outline: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.12);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .toolbar .full {
+      grid-column: 1 / -1;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 12px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      cursor: pointer;
+      min-height: 52px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #eef2f7;
+      color: var(--text);
+    }
+
+    .btn-danger {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border: 1px solid #fecaca;
+    }
+
+    .status {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 6px;
+      min-height: 1.4em;
+    }
+
+    .priority-box {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 12px 14px;
+    }
+
+    .priority-box ol {
+      margin: 8px 0 0 18px;
+      padding: 0;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .item-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 14px;
+      background: #fff;
+      margin-bottom: 14px;
+    }
+
+    .item-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .item-head input[type="checkbox"] {
+      width: 28px;
+      height: 28px;
+      margin-top: 2px;
+      accent-color: var(--accent);
+      flex: 0 0 auto;
+    }
+
+    .item-title-wrap {
+      flex: 1;
+    }
+
+    .item-no {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-radius: 999px;
+      padding: 4px 10px;
+      margin-bottom: 8px;
+    }
+
+    .item-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .subpoint {
+      margin: 10px 0 0;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: #f8fafc;
+      font-size: 0.93rem;
+      line-height: 1.65;
+    }
+
+    .photo-input {
+      width: 100%;
+      border: 1.5px dashed #9ca3af;
+      border-radius: 14px;
+      padding: 12px;
+      background: #fcfcfd;
+      font-size: 15px;
+    }
+
+    .thumb-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .thumb {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      background: #eef2f7;
+      aspect-ratio: 1 / 1;
+      border: 1px solid #e5e7eb;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      cursor: zoom-in;
+    }
+
+    .thumb .thumb-name {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 6px 8px;
+      font-size: 0.72rem;
+      color: #fff;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0));
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .footer-note {
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.86);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 16px;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-inner {
+      width: 100%;
+      max-width: 960px;
+      position: relative;
+    }
+
+    .modal img {
+      width: 100%;
+      max-height: 86vh;
+      object-fit: contain;
+      border-radius: 16px;
+      background: #111827;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -10px;
+      right: -2px;
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+      font-size: 1.4rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (min-width: 640px) {
+      .grid.cols-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+      .thumb-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>新店オープン初日・2日目 SVチェックリスト</h1>
+      <p>おにぎり中心の物販店舗向け。現場での事故防止、品質維持、オペレーション安定、欠品・ロス管理、2日目以降の再現性確保を目的としたスマホ入力用フォームです。</p>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">基本情報</h2>
+      <div class="grid cols-2">
+        <div class="field">
+          <label for="storeName">店舗名</label>
+          <input id="storeName" type="text" placeholder="例：おにまる ○○店" />
+        </div>
+        <div class="field">
+          <label for="checkDate">確認日</label>
+          <input id="checkDate" type="date" />
+        </div>
+        <div class="field">
+          <label for="svName">確認者（SV）</label>
+          <input id="svName" type="text" placeholder="SV名を入力" />
+        </div>
+        <div class="field">
+          <label for="managerName">店長名</label>
+          <input id="managerName" type="text" placeholder="店長名を入力" />
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">運用の優先順位</h2>
+      <div class="priority-box">
+        <ol>
+          <li>事故を起こさない</li>
+          <li>品質をぶらさない</li>
+          <li>オペレーションを詰まらせない</li>
+          <li>欠品とロスをコントロールする</li>
+          <li>2日目以降も再現できる形にする</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">保存操作</h2>
+      <div class="toolbar">
+        <button class="btn-primary" id="saveBtn" type="button">上書き保存</button>
+        <button class="btn-secondary" id="loadBtn" type="button">保存データ読込</button>
+        <button class="btn-danger full" id="clearBtn" type="button">保存データ削除・画面クリア</button>
+      </div>
+      <div class="status" id="statusText">ブラウザ内ローカル保存（IndexedDB）を使用します。</div>
+    </section>
+
+    <section class="card">
+      <h2 class="section-title">チェック項目</h2>
+      <div id="checklistContainer"></div>
+    </section>
+
+    <section class="card">
+      <div class="footer-note">
+        このHTMLは1ファイル完結です。保存先はブラウザ内のIndexedDBであり、クラウド保存ではありません。端末やブラウザを変えると、保存内容は引き継がれません。
+      </div>
+    </section>
+  </div>
+
+  <div class="modal" id="imageModal">
+    <div class="modal-inner">
+      <button class="modal-close" id="modalClose" type="button" aria-label="閉じる">×</button>
+      <img id="modalImage" alt="拡大画像" />
+    </div>
+  </div>
+
+  <script>
+    const checklistItems = [
+      {
+        title: '衛生・安全・食品事故リスク',
+        subpoint: '手洗い、器具の使い分け、温度管理、異物混入防止、アレルゲン誤案内など、初日から事故につながる要因がないか確認する。'
+      },
+      {
+        title: '製造と販売の流れ',
+        subpoint: '製造→ラップ→シール→陳列が正しく行われている'
+      },
+      {
+        title: '商品品質のばらつき',
+        subpoint: 'おにぎりの形、重量感、具材の見え方、包材の仕上がり、売場での見栄えにばらつきがないかを確認する。'
+      },
+      {
+        title: '欠品とロスのバランス',
+        subpoint: '時間帯別の製造量、売れ筋補充、作りすぎ、値引き判断、廃棄見込みの把握ができているかを確認する。'
+      },
+      {
+        title: '接客の基本',
+        subpoint: '第一声、待たせ方、受け渡し、会計時の案内、表情や声量など、最低限の接客品質が保たれているかを見る。'
+      },
+      {
+        title: '初日の反省が改善されているか',
+        subpoint: '初日に発生した詰まり、ミス、配置不備、役割曖昧などが2日目に改善されているかを確認する。'
+      },
+      {
+        title: '数字と現場がつながっているか',
+        subpoint: '売上、客数、時間帯別の動き、売れ筋、欠品、ロスが現場の感覚と結びついて共有されているかを確認する。'
+      },
+      {
+        title: 'スタッフの疲労と士気',
+        subpoint: '疲弊、遠慮、混乱、役割偏り、声掛け不足がないかを見て、無理なく2日目以降を回せる状態か確認する。'
+      }
+    ];
+
+    const dbName = 'onigiri_sv_checklist_db';
+    const storeName = 'checklist_store';
+    const recordKey = 'main_record';
+    let db;
+    const imageCache = {};
+
+    const els = {
+      storeName: document.getElementById('storeName'),
+      checkDate: document.getElementById('checkDate'),
+      svName: document.getElementById('svName'),
+      managerName: document.getElementById('managerName'),
+      saveBtn: document.getElementById('saveBtn'),
+      loadBtn: document.getElementById('loadBtn'),
+      clearBtn: document.getElementById('clearBtn'),
+      statusText: document.getElementById('statusText'),
+      checklistContainer: document.getElementById('checklistContainer'),
+      imageModal: document.getElementById('imageModal'),
+      modalImage: document.getElementById('modalImage'),
+      modalClose: document.getElementById('modalClose')
+    };
+
+    function setTodayIfEmpty() {
+      if (!els.checkDate.value) {
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        els.checkDate.value = `${yyyy}-${mm}-${dd}`;
+      }
+    }
+
+    function renderChecklist() {
+      els.checklistContainer.innerHTML = checklistItems.map((item, index) => `
+        <article class="item-card" data-index="${index}">
+          <div class="item-head">
+            <input type="checkbox" id="check_${index}" />
+            <div class="item-title-wrap">
+              <div class="item-no">項目 ${index + 1}</div>
+              <h3 class="item-title">${escapeHtml(item.title)}</h3>
+              <div class="subpoint">${escapeHtml(item.subpoint)}</div>
+            </div>
+          </div>
+          <div class="field">
+            <label class="memo-label" for="memo_${index}">SVメモ</label>
+            <textarea id="memo_${index}" placeholder="気づいたこと、改善点、指示内容を記入"></textarea>
+          </div>
+          <div class="field">
+            <label class="photo-label" for="photo_${index}">写真添付（複数選択可）</label>
+            <input class="photo-input" id="photo_${index}" type="file" accept="image/*" multiple />
+            <div class="thumb-grid" id="thumbs_${index}"></div>
+          </div>
+        </article>
+      `).join('');
+
+      checklistItems.forEach((_, index) => {
+        const input = document.getElementById(`photo_${index}`);
+        input.addEventListener('change', (e) => handleFiles(index, e.target.files));
+      });
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function openDb() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(dbName, 1);
+        request.onupgradeneeded = (event) => {
+          const database = event.target.result;
+          if (!database.objectStoreNames.contains(storeName)) {
+            database.createObjectStore(storeName, { keyPath: 'id' });
+          }
+        };
+        request.onsuccess = () => {
+          db = request.result;
+          resolve(db);
+        };
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    function saveRecord(data) {
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(storeName, 'readwrite');
+        const store = tx.objectStore(storeName);
+        const request = store.put({ id: recordKey, ...data, updatedAt: new Date().toISOString() });
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    function loadRecord() {
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(storeName, 'readonly');
+        const store = tx.objectStore(storeName);
+        const request = store.get(recordKey);
+        request.onsuccess = () => resolve(request.result || null);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    function deleteRecord() {
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(storeName, 'readwrite');
+        const store = tx.objectStore(storeName);
+        const request = store.delete(recordKey);
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    function readFileAsDataURL(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function handleFiles(index, fileList) {
+      const files = Array.from(fileList || []);
+      if (!files.length) return;
+
+      if (!imageCache[index]) imageCache[index] = [];
+
+      for (const file of files) {
+        try {
+          const dataUrl = await readFileAsDataURL(file);
+          imageCache[index].push({
+            name: file.name,
+            type: file.type,
+            size: file.size,
+            dataUrl
+          });
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      renderThumbs(index);
+      document.getElementById(`photo_${index}`).value = '';
+      setStatus(`項目${index + 1}の画像を追加しました。`);
+    }
+
+    function renderThumbs(index) {
+      const wrap = document.getElementById(`thumbs_${index}`);
+      const images = imageCache[index] || [];
+      wrap.innerHTML = images.map((img, imgIndex) => `
+        <div class="thumb">
+          <img src="${img.dataUrl}" alt="添付画像 ${imgIndex + 1}" data-full="${img.dataUrl}" />
+          <div class="thumb-name">${escapeHtml(img.name || `image_${imgIndex + 1}`)}</div>
+        </div>
+      `).join('');
+
+      wrap.querySelectorAll('img').forEach((imgEl) => {
+        imgEl.addEventListener('click', () => openModal(imgEl.dataset.full));
+      });
+    }
+
+    function gatherFormData() {
+      return {
+        basic: {
+          storeName: els.storeName.value.trim(),
+          checkDate: els.checkDate.value,
+          svName: els.svName.value.trim(),
+          managerName: els.managerName.value.trim()
+        },
+        items: checklistItems.map((item, index) => ({
+          title: item.title,
+          checked: document.getElementById(`check_${index}`).checked,
+          memo: document.getElementById(`memo_${index}`).value,
+          images: imageCache[index] || []
+        }))
+      };
+    }
+
+    function applyFormData(data) {
+      clearScreenOnly();
+      if (!data) return;
+
+      els.storeName.value = data.basic?.storeName || '';
+      els.checkDate.value = data.basic?.checkDate || '';
+      els.svName.value = data.basic?.svName || '';
+      els.managerName.value = data.basic?.managerName || '';
+
+      (data.items || []).forEach((item, index) => {
+        const checkEl = document.getElementById(`check_${index}`);
+        const memoEl = document.getElementById(`memo_${index}`);
+        if (checkEl) checkEl.checked = !!item.checked;
+        if (memoEl) memoEl.value = item.memo || '';
+        imageCache[index] = Array.isArray(item.images) ? item.images : [];
+        renderThumbs(index);
+      });
+    }
+
+    function clearScreenOnly() {
+      els.storeName.value = '';
+      els.checkDate.value = '';
+      els.svName.value = '';
+      els.managerName.value = '';
+      checklistItems.forEach((_, index) => {
+        document.getElementById(`check_${index}`).checked = false;
+        document.getElementById(`memo_${index}`).value = '';
+        imageCache[index] = [];
+        renderThumbs(index);
+        document.getElementById(`photo_${index}`).value = '';
+      });
+      setTodayIfEmpty();
+    }
+
+    function setStatus(message, isError = false) {
+      els.statusText.textContent = message;
+      els.statusText.style.color = isError ? 'var(--danger)' : 'var(--muted)';
+    }
+
+    function openModal(src) {
+      els.modalImage.src = src;
+      els.imageModal.classList.add('open');
+    }
+
+    function closeModal() {
+      els.imageModal.classList.remove('open');
+      els.modalImage.src = '';
+    }
+
+    async function onSave() {
+      try {
+        const data = gatherFormData();
+        await saveRecord(data);
+        setStatus('保存しました。次回は「保存データ読込」で復元できます。');
+      } catch (err) {
+        console.error(err);
+        setStatus('保存に失敗しました。ブラウザ設定をご確認ください。', true);
+      }
+    }
+
+    async function onLoad() {
+      try {
+        const data = await loadRecord();
+        if (!data) {
+          setStatus('保存データはありません。');
+          return;
+        }
+        applyFormData(data);
+        setStatus('保存データを読み込みました。');
+      } catch (err) {
+        console.error(err);
+        setStatus('読込に失敗しました。', true);
+      }
+    }
+
+    async function onClear() {
+      const ok = window.confirm('保存データを削除し、画面もクリアします。よろしいですか？');
+      if (!ok) return;
+
+      try {
+        await deleteRecord();
+        clearScreenOnly();
+        setStatus('保存データを削除し、画面をクリアしました。');
+      } catch (err) {
+        console.error(err);
+        setStatus('削除に失敗しました。', true);
+      }
+    }
+
+    async function init() {
+      renderChecklist();
+      setTodayIfEmpty();
+      try {
+        await openDb();
+        setStatus('ブラウザ内ローカル保存（IndexedDB）を使用します。');
+      } catch (err) {
+        console.error(err);
+        setStatus('IndexedDBの初期化に失敗しました。', true);
+      }
+
+      els.saveBtn.addEventListener('click', onSave);
+      els.loadBtn.addEventListener('click', onLoad);
+      els.clearBtn.addEventListener('click', onClear);
+      els.modalClose.addEventListener('click', closeModal);
+      els.imageModal.addEventListener('click', (e) => {
+        if (e.target === els.imageModal) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
